@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Copy, Check, Sparkles, Download, Trophy } from 'lucide-react';
+import { X, Copy, Check, Sparkles, Trophy } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function ReportModal({ isOpen, onClose, reportMarkdown }) {
@@ -14,7 +14,7 @@ export default function ReportModal({ isOpen, onClose, reportMarkdown }) {
           spread: 70,
           origin: { y: 0.6 }
         });
-      } catch (e) {
+      } catch {
         // Fallback
       }
     }

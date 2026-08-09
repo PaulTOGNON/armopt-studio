@@ -54,7 +54,7 @@ Performance Result: 78.6 tokens/sec (3.67x faster than scalar float16).`;
             <h2 className="text-lg font-bold text-[var(--text-main)] font-heading">Interactive Prompt & Inference Sandbox</h2>
           </div>
           <p className="text-xs text-[var(--text-muted)]">
-            Compare live token generation speed between Baseline FP16 and your Arm KleidiAI optimized pipeline.
+            Compare live token generation speed between Baseline FP16 and your Arm KleidiAI optimized pipeline on <span className="text-[var(--color-primary)] font-semibold">{selectedArch.name}</span>.
           </p>
         </div>
       </div>
