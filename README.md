@@ -5,23 +5,25 @@
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![Python Engine](https://img.shields.io/badge/Python-3.9%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](armopt/benchmark.py)
 
-**ArmOpt Studio** is an open-source AI optimization and benchmarking workbench engineered for the **Arm Create: AI Optimization Challenge 2026** (Track 2: Cloud AI). It provides AI developers and system engineers with a unified **React web workbench** and an executable **Python benchmark harness (`armopt.benchmark`)** to profile, quantize, and accelerate Small Language Models (SLMs), LLMs, and Vision models across **Arm Neoverse (AWS Graviton4, Google Axion, Ampere Altra)**, **Apple M-Series**, and **Raspberry Pi** platforms.
+**ArmOpt Studio** is an open-source AI optimization and benchmarking workbench engineered for the **Arm Create: AI Optimization Challenge 2026** (**Track 2: Cloud AI & Developer Experience**). It provides AI developers and system engineers with a unified **React 19 web workbench** and a **dual-mode Python benchmark harness (`armopt.benchmark`)** to profile, quantize, and accelerate Small Language Models (SLMs), LLMs, and Vision models across **Arm Neoverse (AWS Graviton4, Google Axion, Ampere Altra)**, **Apple M-Series**, and **Raspberry Pi** platforms.
 
 ---
 
 ## 🌟 Key Features
 
 * **🖥️ Multi-Platform Arm Silicon Profiler**: Support for 5 target hardware platforms:
-  * AWS Graviton4 (Arm Neoverse V2, SVE2 4x128b)
-  * Google Axion (Arm Neoverse V2)
-  * Ampere Altra Max (Arm Neoverse N1)
-  * Apple M4 Max (Armv9.2-A SME2)
-  * Raspberry Pi 5 (Arm Cortex-A76)
-* **⚡ Arm KleidiAI Micro-Kernel Acceleration**: Benchmark FP16 baselines vs INT8 ONNX vs **INT4 Arm KleidiAI SIMD micro-kernels** vs FlashAttention-2 Arm64.
+  * **AWS Graviton4** (Arm Neoverse V2, SVE2 4x128b)
+  * **Google Axion** (Arm Neoverse V2, BF16 DotProduct)
+  * **Ampere Altra Max** (Arm Neoverse N1, 128 Cores)
+  * **Apple M4 Max** (Armv9.2-A SME2 Matrix Extensions)
+  * **Raspberry Pi 5** (Arm Cortex-A76 SIMD)
+* **⚡ Arm KleidiAI Micro-Kernel Acceleration**: Compare FP16 baselines vs INT8 ONNX vs **INT4 Arm KleidiAI SIMD micro-kernels** vs FlashAttention-2 Arm64.
+* **⚙️ Dual-Mode Benchmark Engine (`armopt.benchmark`)**:
+  * `--mode live`: Measures genuine wall-clock GEMM/MatMul compute GFLOPS, memory RSS via `psutil`, and thread scaling on the host CPU in real-time.
+  * `--mode target`: Computes target silicon projection models for Arm Neoverse Cloud AI capacity planning.
 * **📈 Real-Time Performance & PMU Counters**: Throughput (`tok/s`), Time To First Token (`TTFT` latency in ms), RAM footprint savings (-70%), and Arm Hardware PMU vector utilization rates.
 * **🤖 Arm Performix MCP Telemetry Stream**: Live telemetry and dynamic insights from the Arm Performix Model Context Protocol (MCP) server providing automated CPU hotspot diagnostics and AI auto-tuning recommendations.
 * **🧪 Interactive Inference Sandbox**: Side-by-side token generation comparison between baseline FP16 and Arm KleidiAI optimized pipelines.
-* **🐍 Executable Python Benchmark CLI (`armopt.benchmark`)**: CLI benchmarking tool to run automated performance tests, detect hardware SIMD extensions, and export pre-formatted JSON benchmark reports.
 * **📝 Automated Devpost Submission Generator**: One-click Markdown report builder with pre-formatted benchmark tables for judges.
 * **☀️ Theme Switcher**: Light Mode default with full Dark Mode toggle support.
 
@@ -49,7 +51,7 @@
                                   v
 +-------------------------------------------------------------------+
 |               ArmOpt Benchmark Engine (Python 3.9+)               |
-|      armopt.benchmark CLI | Hardware PMU Telemetry | JSON Export  |
+|  armopt.benchmark CLI (--mode live|target) | PMU Telemetry | JSON   |
 +---------------------------------+---------------------------------+
                                   |
                                   v
@@ -87,11 +89,14 @@ Open your browser at `http://localhost:5173/` or `http://localhost:5174/`.
 # Install Python dependencies
 pip install -r requirements.txt
 
-# Run benchmark for Phi-3-mini with INT4 KleidiAI optimization
-python -m armopt.benchmark --model phi-3-mini --preset int4_kleidi --arch aws-graviton4
+# Run LIVE host hardware matrix benchmark
+python -m armopt.benchmark --mode live --threads 8
 
-# Run benchmark for Llama-3.1-8B and export JSON report
-python -m armopt.benchmark --model llama-3-8b --preset int4_kleidi_flash --json-output report.json
+# Run TARGET Arm Neoverse Graviton4 profiling for Phi-3-mini
+python -m armopt.benchmark --mode target --model phi-3-mini --preset int4_kleidi --arch aws-graviton4
+
+# Run benchmark for Llama-3.1-8B and export JSON report for judges
+python -m armopt.benchmark --mode target --model llama-3-8b --preset int4_kleidi_flash --json-output report.json
 ```
 
 ---
@@ -99,7 +104,7 @@ python -m armopt.benchmark --model llama-3-8b --preset int4_kleidi_flash --json-
 ## 📄 Devpost Submission Information
 
 Built with ❤️ for the **Arm Create: AI Optimization Challenge 2026**.
-* **Track**: Cloud AI & Developer Experience
+* **Track**: Track 2 — Cloud AI & Developer Experience
 * **License**: MIT License ([LICENSE](LICENSE))
 * **Target Hardware**: AWS Graviton4, Google Axion, Ampere Altra Max, Apple M4 Max, Raspberry Pi 5.
 

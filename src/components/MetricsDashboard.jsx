@@ -88,11 +88,12 @@ export default function MetricsDashboard({ selectedModel, selectedPreset, select
       <div className="flex items-center justify-between gap-4 mb-6">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="badge badge-green">Live Performance</span>
+            <span className="badge badge-green">Arm Silicon Profile</span>
+            <span className="badge badge-cyan">CLI --mode live Ready</span>
             <h2 className="text-lg font-bold text-[var(--text-main)] font-heading">Benchmark & Optimization Metrics</h2>
           </div>
           <p className="text-xs text-[var(--text-muted)]">
-            Real-time inference performance and hardware PMU metrics for <span className="text-[var(--text-main)] font-semibold">{selectedModel.name}</span> on <span className="text-[var(--color-primary)] font-semibold">{selectedArch.name}</span>.
+            Inference performance metrics and hardware PMU counters for <span className="text-[var(--text-main)] font-semibold">{selectedModel.name}</span> on <span className="text-[var(--color-primary)] font-semibold">{selectedArch.name}</span>. Run <code className="text-[var(--color-secondary)]">python -m armopt.benchmark --mode live</code> for real host HW compute tests.
           </p>
         </div>
       </div>
